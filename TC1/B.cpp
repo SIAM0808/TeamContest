@@ -6,16 +6,26 @@ using namespace std;
 #else
 #define debug(x)
 #endif
-
+#define int long long
 using ll = long long;
 
 void Solve()
 {
-	int n, k;
-	cin >> n >> k;
-	if(n == 1 && k == 0) cout << "No\n";
-	else if(k == n - 1) cout << "No\n";
-	else cout << "Yes" << endl;
+    int n, k;
+    cin >> n >> k;
+    vector<int> v(n);
+    for(int i=0; i<n; i++) cin >> v[i];
+    map<int, int> mp;
+    for(int i : v) mp[i]++;
+    set<int> st;
+    int cnt = 0;
+    for(auto [x, y] : mp) cnt += y < k;
+    // if(cnt&1 || cnt == 0) cout << "YES" << endl;
+    // else cout << "NO" << endl;
+    int mx = 0;
+    while(mp[mx] >= 2*k) mx++;
+    if(mp[mx] == 2*k - 1) cout << "YES" << endl;
+    else cout << "NO" << endl;
 }
 
 int32_t main()

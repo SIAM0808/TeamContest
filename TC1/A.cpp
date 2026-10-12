@@ -6,16 +6,22 @@ using namespace std;
 #else
 #define debug(x)
 #endif
-
+#define int long long
 using ll = long long;
 
 void Solve()
 {
-    int n, k;
-    cin >> n >> k;
-    if(k == 2*n) cout << 2*n << endl;
-    else if(k > n) cout << (k%n) * 2 << endl;
-    else cout << 0 << endl;
+    int a, b;
+    cin >> a >> b;
+    if(a == 0 && b > 1){
+        cout << -1 << endl;
+        return;
+    }
+    if(b - 1 > a) cout << -1 << endl;
+    else{
+        int rem = (a + b) % 2;
+        cout << rem + a << endl;
+    }
 }
 
 int32_t main()

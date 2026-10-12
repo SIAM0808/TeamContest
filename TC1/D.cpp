@@ -1,57 +1,40 @@
-#include <bits/stdc++.h>
-#pragma GCC optimize("Ofast")
+#include<bits/stdc++.h>
 using namespace std;
-#ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x << " = " << x << endl
-#else
+#ifndef ONLIGE_JUDGE
+#define debug(x) cerr << $x << " = " << endl
+#else 
 #define debug(x)
 #endif
+#define int long long
+void Solve(){
+    int n;
+    cin >> n;
+    vector<int> v(n+1000, 0);
+    for(int i=1; i<=n; i++) cin >> v[i];
+    vector<vector<int>> dp(n+1, vector<int>(2, 0));
+    dp[1][0] = v[1];
+    dp[2][0] = v[2];
+    dp[2][1] = v[1] + v[2];
+    for(int i=3; i<=n; i++){    
+        dp[i][0] = max({dp[i-2][1], dp[i-2][0], dp[i-3][1], dp[i-3][0]}) + v[i];
+        dp[i][1] = max({dp[i-1][0], dp[i-2][0], dp[i-2][1]}) + v[i];
+    } 
 
-using ll = long long;
-
-void Solve()
-{
-	int n;
-	cin >> n;
-	vector<int> v(n+1);
-	for(int i=1; i<=n; i++) cin >> v[i];
-	map<int,int> mp;
-	for(int i=1; i<=n; i++) mp[v[i]] = i;
-	for(auto [x, y] : mp) cerr << x << " " << y << endl;
-	// for(int i=1; i<=n; i++){
-	// 	int pos = mp[v[i]];
-	// 		while(pos > 1 && abs(v[pos] - v[pos-1]) > 1 && pos > i){
-	// 			swap(mp[v[pos]], mp[v[pos-1]]);
-	// 			swap(v[pos], v[pos-1]);
-	// 			pos--;
-	// 		}
-	// }
-	// for(int i=1; i<=n; i++){
-	// 	int pos = mp[i];
-	// 	if(pos < i){
-	// 		while(pos < n && abs(v[pos] - v[pos+1]) > 1 && pos < i){
-	// 			swap(mp[v[pos]], mp[v[pos+1]]);
-	// 			swap(v[pos], v[pos+1]);
-	// 		debug(v[pos-1]);
-	// 		debug(v[pos]);
-	// 			pos++;
-	// 		}
-	// 	}
-	// }
-	for(int i=2; i<=n; i++){
-		int pos = i;
-		while(pos > 1 && abs(v[pos] - v[pos-1]) > 1 && v[pos] < v[pos-1]) swap(v[pos], v[pos-1]), pos--;
-	}
-	for(int i=1; i<=n; i++) cout << v[i] << " ";
-	cout << endl;
+    int ans = -1;
+    for (int i = max(n - 2, 1ll); i <= n; i++) {
+        for (int j = 0; j < 2; j++) {
+            ans = max(ans, dp[i][j]);
+        }
+    }
+    assert(ans != -1);
+    cout << ans << endl;
 }
-
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    ll t = 1;
-    cin >> t;
-    while (t--)
+    int t = 1;
+    // cin >> t;
+    while(t--)
         Solve();
     return 0;
 }

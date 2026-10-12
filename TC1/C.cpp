@@ -11,28 +11,26 @@ using ll = long long;
 
 void Solve()
 {
-	int n;
-	cin >> n;
-	vector<int> v(n+1);
-	for(int i=1; i<=n; i++) cin >> v[i];
-	vector<int> pre(n+1);
-	sort(v.begin(), v.end());
-	pre[1] = v[1];
-	for(int i=2; i<=n; i++) pre[i] = pre[i-1] + v[i];
-	int mx = 0;
-	for(int i=1; i<=n;  i++){
-		debug((n - i));
-		debug(pre[i]);
-		mx = max(mx, (n-i)*pre[i] + i*(pre[n] - pre[i]));
-	}
-	cout << mx << endl;
+    deque<char> d;
+    string s; cin >> s;
+    int l = 0;
+    while(s.size() && s.back() == '(') s.pop_back();
+    while(l < s.size() && s[l] == ')') l++;
+    for(auto i=l; i<s.size(); i++) d.push_back(s[i]);
+    int cnt = 0, ln = 0;
+    for(auto i : d){
+        if(i == '(') cnt++;
+        else if(i == ')' && cnt > 0) ln += 2, cnt--;
+    }
+    // cnt = abs(cnt);
+    cout << ln << endl;
 }
 
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     ll t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
         Solve();
     return 0;

@@ -6,34 +6,29 @@ using namespace std;
 #else
 #define debug(x)
 #endif
-
+#define int long long
 using ll = long long;
-const long double EPS = 1e-9;
+
 void Solve()
 {
-	long double l, b;
-	cin >> l >> b;
-	if(2*l <= b || l + b <= l){
-		cout << -1 << endl;
-		return;
-	}
-	long double area = ((b) * sqrt((4*l*l) - (b*b))) / 4;
-	long double cf = (area * 2) / b;
-	debug(cf);
-	// debug(cf1);
-	long double s = (2*l + b) / 2;
-	long double r = area/s;
-	long double R = (l*l*b)/(4.0 * area);
-	long double ans = 0;
-	if(cf - r < R){
-		ans = R - cf + r;
-	}else if(R == cf) ans = r;
-	else ans = cf - R - r;
-	debug(r);
-	debug(R);
-	// else
-	cout << fixed << setprecision(16) << ans << endl;
-	
+    int n, t;
+    cin >> n >> t;
+    vector<int> v(n);
+    for(int i=0; i<n; i++) cin >> v[i];
+    vector<int> pre(n + 1);
+    pre[1] = v[0];
+    for(int i=2; i<=n; i++) pre[i] = pre[i-1] + v[i-1];
+    int mx = 0;
+    for(int i=1; i<=n; i++){
+        int l = i, r = n;
+        while(l <= r){
+            int mid = (l + r) >> 1;
+            int val = pre[mid] - pre[i-1];
+            if(val <= t) l = mid + 1, mx = max(mx, mid - i + 1);
+            else r = mid - 1;
+        }
+    }
+    cout << mx << endl;
 }
 
 int32_t main()
