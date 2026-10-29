@@ -8,6 +8,8 @@ using namespace std;
 #endif
 #define int long long
 using ll = long long;
+// int mod = 1e9 + 7;
+//92675448
 const int MAX = 1e6 + 7;
 vector<bool> is_prime(MAX, true);
 vector<int> primes;
@@ -31,32 +33,18 @@ void init_fact(int n) {
     for (int i = 1; i <= n; i++)
         fact[i] = fact[i - 1] * i % mod;
 }
-
-long long nCr(int n, int r) {
-    if(r == 0 || n == 0) return 1;
-    if (r < 0 || r > n) return 0;
-    long long num = fact[n];
-    long long den = fact[r] * fact[n - r] % mod;
-    return num * binexp(den, mod - 2) % mod;
-}
 void Solve()
 {
-    int n, m , t;
-    cin >> n >> m >> t;
-    int ans = 0;
-    for(int i=4; i<=n; i++){
-        int j = t - i;
-        if(j >= 1 && j <= m) ans += nCr(n, i) * nCr(m, j);
-    }
-    // debug(nCr(m+n-5, t-5));
-    cout << ans << endl;
+    int k;
+    cin >> k;
+    cout << (fact[k] - binexp(2, k-1) + mod) % mod << endl;
 }
 
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     ll t = 1;
-    init_fact(10000);
+    init_fact(1000000);
     // cin >> t;
     while (t--)
         Solve();
